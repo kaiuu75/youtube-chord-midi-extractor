@@ -9,6 +9,15 @@ A Python command-line tool that downloads audio from YouTube, analyzes it to det
 - **MIDI generation** - Convert detected chords to MIDI files with accurate timing
 - **High accuracy** - The autochord model achieves 67.33% accuracy on chord recognition
 
+## Requirements
+
+This tool is **macOS only**. The following are required:
+
+- **macOS** (Apple Silicon or Intel)
+- **Python 3.8 or higher**
+- **FFmpeg** (for audio processing)
+- **Homebrew** (for installing dependencies)
+
 ## Installation
 
 1. Clone the repository:
@@ -17,31 +26,26 @@ A Python command-line tool that downloads audio from YouTube, analyzes it to det
    cd youtube-chord-midi-extractor
    ```
 
-2. Install Python 3.8 or higher
-
-3. Set up a virtual environment (recommended):
+2. Set up a virtual environment (recommended):
    ```bash
    # Create virtual environment
    python3 -m venv venv
    
    # Activate virtual environment
-   # On macOS/Linux:
    source venv/bin/activate
-   # On Windows:
-   # venv\Scripts\activate
    ```
 
-4. Install FFmpeg (required for audio processing):
-   - macOS: `brew install ffmpeg`
-   - Linux: `sudo apt-get install ffmpeg`
-   - Windows: Download from [FFmpeg website](https://ffmpeg.org/download.html)
+3. Install FFmpeg:
+   ```bash
+   brew install ffmpeg
+   ```
 
-5. Install Python dependencies:
+4. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-6. **macOS users only**: Install the NNLS-Chroma VAMP plugin:
+5. Install the NNLS-Chroma VAMP plugin:
    ```bash
    # Install dependencies
    brew install boost vamp-plugin-sdk
@@ -81,10 +85,7 @@ A Python command-line tool that downloads audio from YouTube, analyzes it to det
 
 Make sure your virtual environment is activated (if you're using one):
 ```bash
-# On macOS/Linux:
 source venv/bin/activate
-# On Windows:
-# venv\Scripts\activate
 ```
 
 Run the script:
@@ -138,6 +139,5 @@ The autochord library uses TensorFlow and the NNLS-Chroma VAMP plugin for featur
 - Chord detection accuracy is approximately 67.33% (as reported by autochord)
 - Processing may take a few minutes depending on song length (especially on first run when the model is downloaded)
 - Temporary audio files are automatically cleaned up after processing
-- macOS is supported (Windows is not supported by autochord, but the tool may work with some tweaks)
 - The model recognizes major and minor triads only (no extended chords like 7ths, sus, dim, aug, etc.)
 
