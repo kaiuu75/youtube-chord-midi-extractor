@@ -8,6 +8,9 @@ A Python command-line tool that downloads audio from YouTube, analyzes it to det
 - **YouTube integration** - Search and download audio directly from YouTube
 - **MIDI generation** - Convert detected chords to MIDI files with accurate timing
 - **High accuracy** - The autochord model achieves 67.33% accuracy on chord recognition
+- **Lightweight** - Uses autochord for efficient chord detection without extensive computational resources
+- **24 chord types** - Recognizes 12 major and 12 minor triads (C, C#, D, D#, E, F, F#, G, G#, A, A#, B and their minor variants)
+- **Auto cleanup** - Temporary audio files are automatically removed after processing
 
 ## Requirements
 
