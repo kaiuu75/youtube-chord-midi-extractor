@@ -23,13 +23,48 @@ This tool is **macOS only**. The following are required:
 
 ## Installation
 
-1. Clone the repository:
+**Before you start:** Both system (plugin) and Python dependencies are required for the tool to work. Install the NNLS-Chroma VAMP plugin first!
+
+1. **Install the NNLS-Chroma VAMP plugin:**
+   ```bash
+   # Install dependencies
+   brew install boost vamp-plugin-sdk
+
+   # Get installed versions (adjust paths if needed)
+   VAMP_VERSION=$(ls /opt/homebrew/Cellar/vamp-plugin-sdk/ | head -1)
+   BOOST_VERSION=$(ls /opt/homebrew/Cellar/boost/ | head -1)
+
+   # Clone and build the plugin
+   cd /tmp
+   git clone https://github.com/c4dm/nnls-chroma
+   cd nnls-chroma
+
+   # Set up build environment
+   ln -s /opt/homebrew/Cellar/vamp-plugin-sdk/$VAMP_VERSION vamp
+   ln -s /opt/homebrew/Cellar/boost/$BOOST_VERSION boost
+   cp vamp/lib/*.a vamp/include/ 2>/dev/null || true
+
+   # Patch Makefile for macOS
+   sed -i '' 's|VAMP_SDK_DIR = ../vamp-plugin-sdk|VAMP_SDK_DIR = vamp/include|' Makefile.osx
+   sed -i '' 's|BOOST_ROOT = ../boost_1_48_0|BOOST_ROOT = boost/include|' Makefile.osx
+   sed -i '' 's|-arch x86_64||' Makefile.osx
+
+   # Build and install
+   make -f Makefile.osx
+   mkdir -p ~/Library/Audio/Plug-Ins/Vamp
+   cp nnls-chroma.dylib ~/Library/Audio/Plug-Ins/Vamp/
+   ```
+   **Note:** If you have an Intel Mac (not Apple Silicon), use `/usr/local/Cellar` instead of `/opt/homebrew/Cellar` in the paths above.
+   
+   See [this issue](https://github.com/cjbayron/autochord/issues/2) for more details.
+
+2. **Clone the repository:**
    ```bash
    git clone https://github.com/kaiuu75/youtube-chord-midi-extractor.git
    cd youtube-chord-midi-extractor
    ```
 
-2. Set up a virtual environment (recommended):
+3. **Set up a virtual environment (recommended):**
    ```bash
    # Create virtual environment
    python3 -m venv venv
@@ -38,44 +73,10 @@ This tool is **macOS only**. The following are required:
    source venv/bin/activate
    ```
 
-3. Install Python dependencies:
+4. **Install Python dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
-
-4. Install the NNLS-Chroma VAMP plugin:
-   ```bash
-   # Install dependencies
-   brew install boost vamp-plugin-sdk
-   
-   # Get installed versions (adjust paths if needed)
-   VAMP_VERSION=$(ls /opt/homebrew/Cellar/vamp-plugin-sdk/ | head -1)
-   BOOST_VERSION=$(ls /opt/homebrew/Cellar/boost/ | head -1)
-   
-   # Clone and build the plugin
-   cd /tmp
-   git clone https://github.com/c4dm/nnls-chroma
-   cd nnls-chroma
-   
-   # Set up build environment
-   ln -s /opt/homebrew/Cellar/vamp-plugin-sdk/$VAMP_VERSION vamp
-   ln -s /opt/homebrew/Cellar/boost/$BOOST_VERSION boost
-   cp vamp/lib/*.a vamp/include/ 2>/dev/null || true
-   
-   # Patch Makefile for macOS
-   sed -i '' 's|VAMP_SDK_DIR = ../vamp-plugin-sdk|VAMP_SDK_DIR = vamp/include|' Makefile.osx
-   sed -i '' 's|BOOST_ROOT = ../boost_1_48_0|BOOST_ROOT = boost/include|' Makefile.osx
-   sed -i '' 's|-arch x86_64||' Makefile.osx
-   
-   # Build and install
-   make -f Makefile.osx
-   mkdir -p ~/Library/Audio/Plug-Ins/Vamp
-   cp nnls-chroma.dylib ~/Library/Audio/Plug-Ins/Vamp/
-   ```
-   
-   **Note:** If you have an Intel Mac (not Apple Silicon), use `/usr/local/Cellar` instead of `/opt/homebrew/Cellar` in the paths above.
-   
-   See [this issue](https://github.com/cjbayron/autochord/issues/2) for more details.
 
 **Note:** On first run, autochord will download the pre-trained model (~50MB). This is a one-time download.
 
@@ -116,6 +117,23 @@ python main.py "Song Name" -o output.mid --tempo 140 --min-duration 1.0
 ```
 
 ## Output
+
+By default, all generated MIDI files are saved to the `midi_files/` folder in your project root.
+
+- If you use the `-o` or `--output` option and provide a filename rather than an absolute path, the output will be saved in the `midi_files/` directory.
+- If you provide an absolute path with `-o`, the file will be saved exactly there.
+
+Example:
+```bash
+python main.py "Imagine by John Lennon"
+# Output saved to midi_files/Imagine_by_John_Lennon_chords.mid
+
+python main.py "Imagine by John Lennon" -o my_chords.mid
+# Output saved to midi_files/my_chords.mid
+
+python main.py "Imagine by John Lennon" -o /Users/you/Desktop/my_chords.mid
+# Output saved to /Users/you/Desktop/my_chords.mid
+```
 
 The generated MIDI file will contain the detected chord progression with accurate timing. Each chord is represented as MIDI notes played simultaneously. The model recognizes 24 chord types:
 - 12 major chords (C, C#, D, D#, E, F, F#, G, G#, A, A#, B)

@@ -12,6 +12,8 @@ from download import search_and_download
 from analyze import detect_chords
 from midi_generator import create_midi_file
 
+MIDI_DIR = "midi_files"
+
 
 def main():
     """Main entry point for the CLI."""
@@ -87,22 +89,31 @@ def main():
         if len(chords) > 20:
             print(f"  ... and {len(chords) - 20} more chord segments")
         
+        # Ensure midi_files directory exists
+        midi_dir_path = os.path.abspath(MIDI_DIR)
+        os.makedirs(midi_dir_path, exist_ok=True)
+
         # Step 3: Generate MIDI file
         print("\n" + "=" * 50)
         print("Step 3: Generating MIDI file")
         print("=" * 50)
-        
+
         # Determine output file name
         if args.output:
             output_file = args.output
+            # If relative (not absolute), place in midi_files/
+            if not os.path.isabs(output_file):
+                output_file = os.path.join(midi_dir_path, output_file)
+            else:
+                output_file = output_file
         else:
             # Create filename from song name
             safe_name = "".join(c for c in args.song_name if c.isalnum() or c in (' ', '-', '_')).strip()
             safe_name = safe_name.replace(' ', '_')
-            output_file = f"{safe_name}_chords.mid"
-        
+            output_file = os.path.join(midi_dir_path, f"{safe_name}_chords.mid")
+
         create_midi_file(chords, output_file, tempo=args.tempo, min_duration=args.min_duration)
-        
+
         print(f"\nSuccess! MIDI file created: {output_file}")
         print(f"Total chords detected: {len(chords)}")
         
