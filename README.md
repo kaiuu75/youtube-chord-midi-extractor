@@ -27,17 +27,21 @@ pip install -r requirements.txt
    # Install dependencies
    brew install boost vamp-plugin-sdk
    
+   # Get installed versions (adjust paths if needed)
+   VAMP_VERSION=$(ls /opt/homebrew/Cellar/vamp-plugin-sdk/ | head -1)
+   BOOST_VERSION=$(ls /opt/homebrew/Cellar/boost/ | head -1)
+   
    # Clone and build the plugin
    cd /tmp
    git clone https://github.com/c4dm/nnls-chroma
    cd nnls-chroma
    
    # Set up build environment
-   ln -s /opt/homebrew/Cellar/vamp-plugin-sdk/2.10.0_1 vamp
-   ln -s /opt/homebrew/Cellar/boost/1.89.0 boost
+   ln -s /opt/homebrew/Cellar/vamp-plugin-sdk/$VAMP_VERSION vamp
+   ln -s /opt/homebrew/Cellar/boost/$BOOST_VERSION boost
    cp vamp/lib/*.a vamp/include/ 2>/dev/null || true
    
-   # Patch Makefile for macOS (update version numbers if needed)
+   # Patch Makefile for macOS
    sed -i '' 's|VAMP_SDK_DIR = ../vamp-plugin-sdk|VAMP_SDK_DIR = vamp/include|' Makefile.osx
    sed -i '' 's|BOOST_ROOT = ../boost_1_48_0|BOOST_ROOT = boost/include|' Makefile.osx
    sed -i '' 's|-arch x86_64||' Makefile.osx
@@ -47,6 +51,8 @@ pip install -r requirements.txt
    mkdir -p ~/Library/Audio/Plug-Ins/Vamp
    cp nnls-chroma.dylib ~/Library/Audio/Plug-Ins/Vamp/
    ```
+   
+   **Note:** If you have an Intel Mac (not Apple Silicon), use `/usr/local/Cellar` instead of `/opt/homebrew/Cellar` in the paths above.
    
    See [this issue](https://github.com/cjbayron/autochord/issues/2) for more details.
 
