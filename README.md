@@ -22,6 +22,34 @@ A Python command-line tool that downloads audio from YouTube, analyzes it to det
 pip install -r requirements.txt
 ```
 
+4. **macOS users only**: Install the NNLS-Chroma VAMP plugin:
+   ```bash
+   # Install dependencies
+   brew install boost vamp-plugin-sdk
+   
+   # Clone and build the plugin
+   cd /tmp
+   git clone https://github.com/c4dm/nnls-chroma
+   cd nnls-chroma
+   
+   # Set up build environment
+   ln -s /opt/homebrew/Cellar/vamp-plugin-sdk/2.10.0_1 vamp
+   ln -s /opt/homebrew/Cellar/boost/1.89.0 boost
+   cp vamp/lib/*.a vamp/include/ 2>/dev/null || true
+   
+   # Patch Makefile for macOS (update version numbers if needed)
+   sed -i '' 's|VAMP_SDK_DIR = ../vamp-plugin-sdk|VAMP_SDK_DIR = vamp/include|' Makefile.osx
+   sed -i '' 's|BOOST_ROOT = ../boost_1_48_0|BOOST_ROOT = boost/include|' Makefile.osx
+   sed -i '' 's|-arch x86_64||' Makefile.osx
+   
+   # Build and install
+   make -f Makefile.osx
+   mkdir -p ~/Library/Audio/Plug-Ins/Vamp
+   cp nnls-chroma.dylib ~/Library/Audio/Plug-Ins/Vamp/
+   ```
+   
+   See [this issue](https://github.com/cjbayron/autochord/issues/2) for more details.
+
 **Note:** On first run, autochord will download the pre-trained model (~50MB). This is a one-time download.
 
 ## Usage
