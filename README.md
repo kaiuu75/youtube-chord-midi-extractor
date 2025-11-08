@@ -5,8 +5,8 @@ A Python command-line tool that downloads audio from YouTube, analyzes it to det
 ## Features
 
 - **Automatic chord recognition** using [autochord](https://github.com/cjbayron/autochord), a Bi-LSTM-CRF deep learning model
-- **YouTube integration** - Search and download audio directly from YouTube
-- **MIDI generation** - Convert detected chords to MIDI files with accurate timing
+- **YouTube integration - [yt-dlp](https://github.com/yt-dlp/yt-dlp)** - Search and download audio directly from YouTube
+- **MIDI generation - [mido](https://github.com/mido/mido)** - Convert detected chords to MIDI files with accurate timing
 - **High accuracy** - The autochord model achieves 67.33% accuracy on chord recognition
 - **Lightweight** - Uses autochord for efficient chord detection without extensive computational resources
 - **24 chord types** - Recognizes 12 major and 12 minor triads (C, C#, D, D#, E, F, F#, G, G#, A, A#, B and their minor variants)
@@ -129,22 +129,4 @@ python main.py "Song Name" -o output.mid --tempo 140 --min-duration 1.0
 The generated MIDI file will contain the detected chord progression with accurate timing. Each chord is represented as MIDI notes played simultaneously. The model recognizes 24 chord types:
 - 12 major chords (C, C#, D, D#, E, F, F#, G, G#, A, A#, B)
 - 12 minor chords (Cm, C#m, Dm, D#m, Em, Fm, F#m, Gm, G#m, Am, A#m, Bm)
-
-## Technical Details
-
-This tool uses:
-- **[autochord](https://github.com/cjbayron/autochord)** - Automatic chord recognition using a Bi-LSTM-CRF neural network model
-- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** - YouTube audio download
-- **[mido](https://github.com/mido/mido)** - MIDI file generation
-
-The autochord library uses TensorFlow and the NNLS-Chroma VAMP plugin for feature extraction.
-
-**Note on chord detection:** While there are other chord detection libraries available (such as librosa's chord recognition, ChordRecognition, or more complex deep learning models), autochord was chosen for this project because it provides a good balance between accuracy and computational efficiency. It is more lightweight than many alternatives, making it suitable for quick chord extraction from YouTube audio without requiring extensive computational resources.
-
-## Notes
-
-- Chord detection accuracy is approximately 67.33% (as reported by autochord)
-- Processing may take a few minutes depending on song length (especially on first run when the model is downloaded)
-- Temporary audio files are automatically cleaned up after processing
-- The model recognizes major and minor triads only (no extended chords like 7ths, sus, dim, aug, etc.)
 
