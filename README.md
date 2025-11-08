@@ -76,6 +76,8 @@ This tool is **macOS only**. The following are required:
 4. **Install Python dependencies:**
    ```bash
    pip install -r requirements.txt
+   # Or, using uv for faster installs:
+   uv pip install -r requirements.txt
    ```
 
 **Note:** On first run, autochord will download the pre-trained model (~50MB). This is a one-time download.
