@@ -38,17 +38,12 @@ This tool is **macOS only**. The following are required:
    source venv/bin/activate
    ```
 
-3. Install FFmpeg:
-   ```bash
-   brew install ffmpeg
-   ```
-
-4. Install Python dependencies:
+3. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-5. Install the NNLS-Chroma VAMP plugin:
+4. Install the NNLS-Chroma VAMP plugin:
    ```bash
    # Install dependencies
    brew install boost vamp-plugin-sdk
