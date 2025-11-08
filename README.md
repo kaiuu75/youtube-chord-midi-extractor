@@ -84,6 +84,15 @@ This tool is **macOS only**. The following are required:
 
 **Note:** On first run, autochord will download the pre-trained model (~50MB). This is a one-time download.
 
+## Disclaimer
+
+This tool is for educational and research purposes. Users are responsible for:
+- Complying with YouTube's Terms of Service
+- Respecting copyright laws and obtaining necessary permissions for any downloaded content
+- Using downloaded content in accordance with applicable laws and regulations
+
+The authors and contributors of this tool are not responsible for any misuse of this software.
+
 ## Usage
 
 Make sure your virtual environment is activated (if you're using one):
