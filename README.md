@@ -11,18 +11,37 @@ A Python command-line tool that downloads audio from YouTube, analyzes it to det
 
 ## Installation
 
-1. Install Python 3.8 or higher
-2. Install FFmpeg (required for audio processing):
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/kaiuu75/youtube-chord-midi-extractor.git
+   cd youtube-chord-midi-extractor
+   ```
+
+2. Install Python 3.8 or higher
+
+3. Set up a virtual environment (recommended):
+   ```bash
+   # Create virtual environment
+   python3 -m venv venv
+   
+   # Activate virtual environment
+   # On macOS/Linux:
+   source venv/bin/activate
+   # On Windows:
+   # venv\Scripts\activate
+   ```
+
+4. Install FFmpeg (required for audio processing):
    - macOS: `brew install ffmpeg`
    - Linux: `sudo apt-get install ffmpeg`
    - Windows: Download from [FFmpeg website](https://ffmpeg.org/download.html)
 
-3. Install Python dependencies:
-```bash
-pip install -r requirements.txt
-```
+5. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. **macOS users only**: Install the NNLS-Chroma VAMP plugin:
+6. **macOS users only**: Install the NNLS-Chroma VAMP plugin:
    ```bash
    # Install dependencies
    brew install boost vamp-plugin-sdk
@@ -60,6 +79,15 @@ pip install -r requirements.txt
 
 ## Usage
 
+Make sure your virtual environment is activated (if you're using one):
+```bash
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+# venv\Scripts\activate
+```
+
+Run the script:
 ```bash
 python main.py "Song Name"
 ```
@@ -102,6 +130,8 @@ This tool uses:
 - **[mido](https://github.com/mido/mido)** - MIDI file generation
 
 The autochord library uses TensorFlow and the NNLS-Chroma VAMP plugin for feature extraction.
+
+**Note on chord detection:** While there are other chord detection libraries available (such as librosa's chord recognition, ChordRecognition, or more complex deep learning models), autochord was chosen for this project because it provides a good balance between accuracy and computational efficiency. It is more lightweight than many alternatives, making it suitable for quick chord extraction from YouTube audio without requiring extensive computational resources.
 
 ## Notes
 
