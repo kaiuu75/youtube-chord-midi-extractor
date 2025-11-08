@@ -79,15 +79,6 @@ This tool is **macOS only**. The following are required:
 
 **Note:** On first run, autochord will download the pre-trained model (~50MB). This is a one-time download.
 
-## Disclaimer
-
-This tool is for educational and research purposes. Users are responsible for:
-- Complying with YouTube's Terms of Service
-- Respecting copyright laws and obtaining necessary permissions for any downloaded content
-- Using downloaded content in accordance with applicable laws and regulations
-
-The authors and contributors of this tool are not responsible for any misuse of this software.
-
 ## Usage
 
 Make sure your virtual environment is activated (if you're using one):
@@ -129,4 +120,13 @@ python main.py "Song Name" -o output.mid --tempo 140 --min-duration 1.0
 The generated MIDI file will contain the detected chord progression with accurate timing. Each chord is represented as MIDI notes played simultaneously. The model recognizes 24 chord types:
 - 12 major chords (C, C#, D, D#, E, F, F#, G, G#, A, A#, B)
 - 12 minor chords (Cm, C#m, Dm, D#m, Em, Fm, F#m, Gm, G#m, Am, A#m, Bm)
+
+## Disclaimer
+
+This tool is for educational and research purposes. Users are responsible for:
+- Complying with YouTube's Terms of Service
+- Respecting copyright laws and obtaining necessary permissions for any downloaded content
+- Using downloaded content in accordance with applicable laws and regulations
+
+The authors and contributors of this tool are not responsible for any misuse of this software.
 
